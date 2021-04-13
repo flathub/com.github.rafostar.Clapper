@@ -1,7 +1,7 @@
 {
     "app-id": "com.github.rafostar.Clapper",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.38",
+    "runtime-version": "40",
     "sdk": "org.gnome.Sdk",
     "command": "com.github.rafostar.Clapper",
     "finish-args": [
@@ -49,8 +49,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.1.0",
-                    "commit": "f4968e28abc83ab0ae8c58977e1455faad995245"
+                    "tag": "0.2.0",
+                    "commit": "4766efbbc4b12258302da0c6dd2525fe1463daf8"
                 }
             ]
         }
