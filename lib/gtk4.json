@@ -24,6 +24,10 @@
         {
             "type": "patch",
             "path": "gtk4-popover-unrealize.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gtk4-disable-meson-gnome-post-install.patch"
         }
     ]
 }
