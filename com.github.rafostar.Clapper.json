@@ -49,8 +49,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.2.0",
-                    "commit": "4766efbbc4b12258302da0c6dd2525fe1463daf8"
+                    "tag": "0.2.1",
+                    "commit": "0ab0b668256b1ad8aa92ed23ee72981911b37923"
                 }
             ]
         }
