@@ -2,6 +2,7 @@
     "name": "gtk",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "--wrap-mode=nofallback",
         "-Dbroadway-backend=true",
         "-Dwin32-backend=false",

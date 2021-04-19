@@ -2,6 +2,7 @@
     "name": "gst-plugins-good",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Ddoc=disabled",
         "-Dexamples=disabled",
         "-Dtests=disabled",
