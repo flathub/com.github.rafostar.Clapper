@@ -2,6 +2,7 @@
     "name": "gstreamer",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Ddoc=disabled",
         "-Dgtk_doc=disabled",
         "-Dexamples=disabled",

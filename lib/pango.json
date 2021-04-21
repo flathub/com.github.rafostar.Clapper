@@ -2,6 +2,7 @@
     "name": "pango",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Dgtk_doc=false"
     ],
     "sources": [

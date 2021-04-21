@@ -2,6 +2,7 @@
     "name": "gst-plugins-base",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "--wrap-mode=nofallback",
 
         "-Ddoc=disabled",

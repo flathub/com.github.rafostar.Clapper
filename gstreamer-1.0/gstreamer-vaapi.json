@@ -2,6 +2,7 @@
     "name": "gstreamer-vaapi",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Ddoc=disabled",
         "-Dexamples=disabled",
         "-Dtests=disabled"

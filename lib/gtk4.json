@@ -2,6 +2,7 @@
     "name": "gtk",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "--wrap-mode=nofallback",
         "-Dbroadway-backend=true",
         "-Dwin32-backend=false",
@@ -23,6 +24,10 @@
         {
             "type": "patch",
             "path": "gtk4-popover-unrealize.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gtk4-disable-meson-gnome-post-install.patch"
         }
     ]
 }

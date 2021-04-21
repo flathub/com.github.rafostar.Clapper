@@ -2,6 +2,7 @@
     "name": "gst-libav",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Ddoc=disabled",
         "-Dtests=disabled"
     ],

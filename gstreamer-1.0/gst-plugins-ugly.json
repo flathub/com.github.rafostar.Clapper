@@ -2,6 +2,7 @@
     "name": "gst-plugins-ugly",
     "buildsystem": "meson",
     "config-opts": [
+        "--buildtype=release",
         "-Ddoc=disabled",
         "-Dnls=disabled",
         "-Dtests=disabled",
