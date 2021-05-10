@@ -41,6 +41,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-bad-dashdemux-sidx-range-download.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-bad-tsparse-timestamp-packetized-buffers.patch"
         }
     ]
 }

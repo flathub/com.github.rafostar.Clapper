@@ -1,0 +1,74 @@
+From 50a41aaa4beb0b229abaac93e1ecce03b78640b5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
+Date: Fri, 7 May 2021 10:44:15 +0200
+Subject: [PATCH] matroska: Copy index table when updating track info
+
+Track index table array was being lost during track info update.
+Copy it over to updated info, so it can be used for finding
+nearest seek points.
+---
+ gst/matroska/matroska-demux.c       | 24 ++++++++++++++++++++++++
+ gst/matroska/matroska-read-common.c |  4 +++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/gst/matroska/matroska-demux.c b/gst/matroska/matroska-demux.c
+index 0a299c6c9..c8ccb84a8 100644
+--- a/gst/matroska/matroska-demux.c
++++ b/gst/matroska/matroska-demux.c
+@@ -204,6 +204,22 @@ G_DEFINE_TYPE (GstMatroskaDemux, gst_matroska_demux, GST_TYPE_ELEMENT);
+ GST_ELEMENT_REGISTER_DEFINE_WITH_CODE (matroskademux, "matroskademux",
+     GST_RANK_PRIMARY, GST_TYPE_MATROSKA_DEMUX, _do_init);
+ 
++/* TODO: Remove this function once min GLib >= 2.62 */
++#if !GLIB_CHECK_VERSION(2,62,0)
++static GArray *
++_copy_track_index_table (GArray * index_table)
++{
++  GArray *new_array = g_array_sized_new (FALSE, FALSE,
++      sizeof (GstMatroskaIndex), index_table->len);
++
++  new_array->len = index_table->len;
++  memcpy (new_array->data, index_table->data,
++      index_table->len * sizeof (GstMatroskaIndex));
++
++  return new_array;
++}
++#endif
++
+ static void
+ gst_matroska_demux_finalize (GObject * object)
+ {
+@@ -3492,6 +3508,14 @@ gst_matroska_demux_update_tracks (GstMatroskaDemux * demux, GstEbmlRead * ebml)
+         new_track->index = old_track->index;
+         new_track->pos = old_track->pos;
+         g_ptr_array_index (demux->common.src, old_track_index) = new_track;
++        if (!new_track->index_table && old_track->index_table &&
++            old_track->index_table->len)
++          new_track->index_table =
++#if GLIB_CHECK_VERSION(2,62,0)
++              g_array_copy (old_track->index_table);
++#else
++              _copy_track_index_table (old_track->index_table);
++#endif
+         gst_pad_set_element_private (new_track->pad, new_track);
+ 
+         if (!gst_caps_is_equal (old_track->caps, new_track->caps)) {
+diff --git a/gst/matroska/matroska-read-common.c b/gst/matroska/matroska-read-common.c
+index 90d6e38e1..954e43e0b 100644
+--- a/gst/matroska/matroska-read-common.c
++++ b/gst/matroska/matroska-read-common.c
+@@ -593,8 +593,10 @@ gst_matroska_read_common_do_index_seek (GstMatroskaReadCommon * common,
+   /* find entry just before or at the requested position */
+   if (track && track->index_table)
+     index = track->index_table;
+-  else
++  else {
++    GST_DEBUG_OBJECT (common->sinkpad, "Missing track index table");
+     index = common->index;
++  }
+ 
+   if (!index || !index->len)
+     return NULL;
+-- 
+GitLab
+

@@ -23,7 +23,6 @@
         "lib/pango.json",
         "lib/libsass.json",
         "lib/sassc.json",
-        "lib/gtk4.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
         "lib/libdvdcss.json",
@@ -39,6 +38,7 @@
         "gstreamer-1.0/gst-plugins-ugly.json",
         "gstreamer-1.0/gst-libav.json",
         "gstreamer-1.0/gstreamer-vaapi.json",
+        "lib/gtk4.json",
         {
             "name": "clapper",
             "buildsystem": "meson",
