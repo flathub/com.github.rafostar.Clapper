@@ -15,9 +15,9 @@
         "--enable-runtime-cpudetect",
         "--enable-pthreads",
         "--enable-protocol=file",
-        "--enable-decoder=flv,h263,h264,hevc,mjpeg,mpeg2video,mpeg4,mpegvideo,msmpeg4v1,msmpeg4v2,png,tiff,vc1,vp8,vp9,webp,wmv1,wmv2,wmv3,zerocodec",
-        "--enable-decoder=aac,aac_fixed,aac_latm,ac3,ac3_fixed,eac3,flac,mp3,opus,tak,truehd,tta,wmalossless",
-        "--enable-demuxer=gif,yuv4mpegpipe"
+        "--enable-decoder=dvvideo,flv,h263,h264,hevc,mjpeg,mpeg2video,mpeg4,mpegvideo,msmpeg4v1,msmpeg4v2,png,tiff,vc1,vp8,vp9,webp,wmv1,wmv2,wmv3,zerocodec",
+        "--enable-decoder=aac,aac_fixed,aac_latm,ac3,ac3_fixed,ape,dca,dvaudio,eac3,flac,mp3,opus,tak,truehd,tta,wmalossless",
+        "--enable-demuxer=ape,gif,yuv4mpegpipe"
     ],
     "sources": [
         {
