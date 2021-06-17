@@ -25,6 +25,7 @@
         "lib/sassc.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
+        "lib/libdv.json",
         "lib/libdvdcss.json",
         "lib/libdvdread.json",
         "lib/libdvdnav.json",
