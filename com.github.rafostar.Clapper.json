@@ -13,6 +13,7 @@
         "--share=network",
         "--device=all",
         "--filesystem=xdg-videos",
+        "--own-name=org.mpris.MediaPlayer2.Clapper",
         "--talk-name=org.gnome.Shell",
         "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0",
         "--env=GST_VAAPI_ALL_DRIVERS=1"
@@ -25,6 +26,7 @@
         "lib/sassc.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
+        "lib/libdv.json",
         "lib/libdvdcss.json",
         "lib/libdvdread.json",
         "lib/libdvdnav.json",
@@ -49,8 +51,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.2.1",
-                    "commit": "0ab0b668256b1ad8aa92ed23ee72981911b37923"
+                    "tag": "0.3.0",
+                    "commit": "37d2f7aebd36bf76f428f433a63cd2162e9830bd"
                 }
             ]
         }
