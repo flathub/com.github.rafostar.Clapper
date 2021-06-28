@@ -1,4 +1,4 @@
-From 56e27e78cd36d2767ee5d11fbbb268aa39925009 Mon Sep 17 00:00:00 2001
+From 434e4a368f9fe85818edbb5c2f2a02d07d05ce38 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
 Date: Fri, 7 May 2021 19:51:30 +0200
 Subject: [PATCH] matroska: Support seeking to nearest keyframe
@@ -15,10 +15,10 @@ When user requested a SNAP_NEAREST it always used SNAP_BEFORE which is not what 
  4 files changed, 46 insertions(+), 25 deletions(-)
 
 diff --git a/gst/matroska/matroska-demux.c b/gst/matroska/matroska-demux.c
-index 0a299c6c9..7376d44a7 100644
+index 3a49b2f7d..248aac39c 100644
 --- a/gst/matroska/matroska-demux.c
 +++ b/gst/matroska/matroska-demux.c
-@@ -2746,8 +2746,7 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
+@@ -2767,8 +2767,7 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
    GstSeekFlags flags;
    GstSeekType cur_type, stop_type;
    GstFormat format;
@@ -28,7 +28,7 @@ index 0a299c6c9..7376d44a7 100644
    gdouble rate;
    gint64 cur, stop;
    GstMatroskaTrackContext *track = NULL;
-@@ -2756,7 +2755,6 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
+@@ -2777,7 +2776,6 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
    gboolean update = TRUE;
    gboolean pad_locked = FALSE;
    guint32 seqnum;
@@ -36,7 +36,7 @@ index 0a299c6c9..7376d44a7 100644
  
    g_return_val_if_fail (event != NULL, FALSE);
  
-@@ -2779,8 +2777,6 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
+@@ -2800,8 +2798,6 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
  
    flush = ! !(flags & GST_SEEK_FLAG_FLUSH);
    keyunit = ! !(flags & GST_SEEK_FLAG_KEY_UNIT);
@@ -45,7 +45,7 @@ index 0a299c6c9..7376d44a7 100644
    accurate = ! !(flags & GST_SEEK_FLAG_ACCURATE);
    instant_rate_change = ! !(flags & GST_SEEK_FLAG_INSTANT_RATE_CHANGE);
  
-@@ -2858,24 +2854,16 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
+@@ -2879,24 +2875,16 @@ gst_matroska_demux_handle_seek_event (GstMatroskaDemux * demux,
  
    GST_DEBUG_OBJECT (demux, "New segment %" GST_SEGMENT_FORMAT, &seeksegment);
  
@@ -103,7 +103,7 @@ index 3fcb5c55e..a63af1027 100644
      GST_DEBUG_OBJECT (parse, "No matching seek entry in index");
      GST_OBJECT_UNLOCK (parse);
 diff --git a/gst/matroska/matroska-read-common.c b/gst/matroska/matroska-read-common.c
-index 90d6e38e1..6818667e5 100644
+index 062044f64..61eac52f0 100644
 --- a/gst/matroska/matroska-read-common.c
 +++ b/gst/matroska/matroska-read-common.c
 @@ -585,10 +585,13 @@ gst_matroska_index_seek_find (GstMatroskaIndex * i1, GstClockTime * time,
