@@ -1,0 +1,29 @@
+From 7e612789f4bf73ab6aba04516a4e725aba6565f9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
+Date: Wed, 20 Jan 2021 12:04:48 +0100
+Subject: [PATCH] assrender: Add "application/vnd.ms-opentype" mimetype
+ detection
+
+The "application/vnd.ms-opentype" mimetype is commonly used in many fonts attached in the matroska videos.
+Assrender should treat it as compatible without the need of parsing the file extension.
+---
+ ext/assrender/gstassrender.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ext/assrender/gstassrender.c b/ext/assrender/gstassrender.c
+index e6d31985b6..fb2af0c3d3 100644
+--- a/ext/assrender/gstassrender.c
++++ b/ext/assrender/gstassrender.c
+@@ -1546,7 +1546,8 @@ gst_ass_render_handle_tag_sample (GstAssRender * render, GstSample * sample)
+   static const gchar *mimetypes[] = {
+     "application/x-font-ttf",
+     "application/x-font-otf",
+-    "application/x-truetype-font"
++    "application/x-truetype-font",
++    "application/vnd.ms-opentype"
+   };
+   static const gchar *extensions[] = {
+     ".otf",
+-- 
+GitLab
+
