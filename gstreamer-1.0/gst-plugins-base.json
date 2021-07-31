@@ -30,6 +30,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-base-do-not-set-backbuffer.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-base-glupload-filter-formats.patch"
         }
     ]
 }
