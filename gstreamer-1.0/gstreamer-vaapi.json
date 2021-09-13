@@ -13,6 +13,10 @@
             "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer-vaapi.git",
             "tag": "1.19.1",
             "commit": "5e67efbf27715b8704512fbb7a25dc621ae034fa"
+        },
+        {
+            "type": "patch",
+            "path": "gstreamer-vaapi-revert-demote-vaapidecodebin.patch"
         }
     ]
 }
