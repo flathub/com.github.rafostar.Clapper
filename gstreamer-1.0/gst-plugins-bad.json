@@ -45,6 +45,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-bad-workaround-playbin2-missing-videometa.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-bad-vah264dec-decode-baseline.patch"
         }
     ]
 }
