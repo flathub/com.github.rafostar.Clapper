@@ -12,6 +12,7 @@
         "--socket=pulseaudio",
         "--share=network",
         "--device=all",
+        "--filesystem=xdg-run/pipewire-0:ro",
         "--filesystem=xdg-videos",
         "--own-name=org.mpris.MediaPlayer2.Clapper",
         "--talk-name=org.gnome.Shell",
@@ -19,7 +20,6 @@
         "--env=GST_VAAPI_ALL_DRIVERS=1"
     ],
     "modules": [
-        "lib/glib-networking.json",
         "shared-modules/gudev/gudev.json",
         "lib/pango.json",
         "lib/libsass.json",
@@ -41,6 +41,7 @@
         "gstreamer-1.0/gst-libav.json",
         "gstreamer-1.0/gstreamer-vaapi.json",
         "lib/gtk4.json",
+        "lib/libadwaita.json",
         {
             "name": "clapper",
             "buildsystem": "meson",
@@ -51,10 +52,13 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.3.0",
-                    "commit": "37d2f7aebd36bf76f428f433a63cd2162e9830bd"
+                    "tag": "0.4.0",
+                    "commit": "a62483fda9449e773f1868807efba1f4f4d99cac"
                 }
             ]
         }
+    ],
+    "cleanup-commands": [
+        "ln -s /lib/$FLATPAK_ARCH-linux-*/gstreamer-1.0/libgstpipewire.so /app/lib/gstreamer-1.0/"
     ]
 }
