@@ -42,6 +42,22 @@
         "gstreamer-1.0/gstreamer-vaapi.json",
         "lib/gtk4.json",
         {
+            "name": "libadwaita",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dexamples=false",
+                "-Dtests=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/GNOME/libadwaita.git",
+                    "//branch": "main",
+                    "tag": "1.0.0-alpha.2"
+                }
+            ]
+        },
+        {
             "name": "clapper",
             "buildsystem": "meson",
             "config-opts": [
@@ -51,7 +67,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.3.0",
+                    "tag": "0.4.0",
                     "commit": "37d2f7aebd36bf76f428f433a63cd2162e9830bd"
                 }
             ]
