@@ -34,6 +34,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-base-glupload-filter-formats.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-base-playbin-do-not-expand-caps-to-any.patch"
         }
     ]
 }
