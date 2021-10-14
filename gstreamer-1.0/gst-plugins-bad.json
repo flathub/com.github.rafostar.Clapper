@@ -44,6 +44,10 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-bad-mpdparser-fix-missing-uri-query.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-bad-workaround-playbin2-missing-videometa.patch"
         },
         {
