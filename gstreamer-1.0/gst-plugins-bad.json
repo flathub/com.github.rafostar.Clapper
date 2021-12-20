@@ -44,6 +44,10 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-bad-dashdemux-improve-initial-representation-selection.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-bad-mpdparser-fix-missing-uri-query.patch"
         },
         {
