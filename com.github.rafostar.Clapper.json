@@ -42,6 +42,7 @@
         "gstreamer-1.0/gstreamer-vaapi.json",
         "lib/gtk4.json",
         "lib/libadwaita.json",
+        "lib/gtuber.json",
         {
             "name": "clapper",
             "buildsystem": "meson",
