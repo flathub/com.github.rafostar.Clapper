@@ -40,6 +40,10 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-bad-assrender-support-rfc8081-mime-types.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-bad-dashdemux-sidx-range-download.patch"
         },
         {
