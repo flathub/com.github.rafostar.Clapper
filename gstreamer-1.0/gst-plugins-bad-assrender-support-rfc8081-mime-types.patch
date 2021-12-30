@@ -1,0 +1,63 @@
+From 01ef7151e9be01b4c811d5886dd8f470549a1ec6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
+Date: Wed, 29 Dec 2021 21:28:56 +0100
+Subject: [PATCH 1/2] assrender: Handle ".ttc" attachment extension
+
+TTC stands for "TrueType Collection" file. We can pass it
+into libass as any other attachment. Add it to the supported
+extensions list, so the fonts it contains will be used.
+---
+ ext/assrender/gstassrender.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ext/assrender/gstassrender.c b/ext/assrender/gstassrender.c
+index 81bd5a8a21..9210555f08 100644
+--- a/ext/assrender/gstassrender.c
++++ b/ext/assrender/gstassrender.c
+@@ -1558,7 +1558,8 @@ gst_ass_render_handle_tag_sample (GstAssRender * render, GstSample * sample)
+   };
+   static const gchar *extensions[] = {
+     ".otf",
+-    ".ttf"
++    ".ttf",
++    ".ttc"
+   };
+ 
+   GstBuffer *buf;
+-- 
+GitLab
+
+
+From 31d0e5723fcbdb5adacbcaf260f2294d7cf539cd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
+Date: Wed, 29 Dec 2021 21:29:02 +0100
+Subject: [PATCH 2/2] assrender: Support RFC8081 mime types
+
+Old "application/*" are now as per RFC8081 deprecated in favor of
+new "font/*" mime types. Some new encoders are already using the
+updated mime types. We need to also add them to the support list
+in order for assrender to correctly identify them as fonts.
+---
+ ext/assrender/gstassrender.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/ext/assrender/gstassrender.c b/ext/assrender/gstassrender.c
+index 9210555f08..f1639ff906 100644
+--- a/ext/assrender/gstassrender.c
++++ b/ext/assrender/gstassrender.c
+@@ -1554,7 +1554,11 @@ gst_ass_render_handle_tag_sample (GstAssRender * render, GstSample * sample)
+     "application/x-font-ttf",
+     "application/x-font-otf",
+     "application/x-truetype-font",
+-    "application/vnd.ms-opentype"
++    "application/vnd.ms-opentype",
++    "font/ttf",
++    "font/otf",
++    "font/sfnt",
++    "font/collection"
+   };
+   static const gchar *extensions[] = {
+     ".otf",
+-- 
+GitLab
+
