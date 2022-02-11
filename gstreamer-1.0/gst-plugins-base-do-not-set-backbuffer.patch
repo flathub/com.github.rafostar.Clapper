@@ -7,13 +7,13 @@ This aims to workaround a Mesa bug that causes crash on Intel GPUs
 caused by calling "glDrawBuffer (GL_BACK)" on Wayland where
 there is no actual backbuffer in GStreamer OpenGL context.
 ---
- gst-libs/gst/gl/gstglmemory.c | 8 +++++++-
+ .../gst-plugins-base/gst-libs/gst/gl/gstglmemory.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/gst-libs/gst/gl/gstglmemory.c b/gst-libs/gst/gl/gstglmemory.c
+diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglmemory.c b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglmemory.c
 index 76c04eb1b..cd3481847 100644
---- a/gst-libs/gst/gl/gstglmemory.c
-+++ b/gst-libs/gst/gl/gstglmemory.c
+--- a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglmemory.c
++++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglmemory.c
 @@ -762,7 +762,13 @@ gst_gl_memory_copy_teximage (GstGLMemory * src, guint tex_id,
      gl->DeleteFramebuffers (n_fbos, &fbo[0]);
  

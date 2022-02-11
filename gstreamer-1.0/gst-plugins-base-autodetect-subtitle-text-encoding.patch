@@ -1,4 +1,4 @@
-From dd10d228c1c7a8642598cc74d464acf2c14af3e0 Mon Sep 17 00:00:00 2001
+From 7b96f573063eb156a5baec747776c39c391273f3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
 Date: Mon, 28 Jun 2021 18:21:09 +0200
 Subject: [PATCH] subparse: Autodetect subtitle text encoding
@@ -8,15 +8,15 @@ or manually specified instead of blindly guessing its "ISO-8859-15".
 The "uchardet" dependency is optional and when is not available at
 compile time, then old behaviour will be used.
 ---
- gst/subparse/gstsubparse.c | 60 ++++++++++++++++++++++++++++++++++----
- gst/subparse/meson.build   | 12 ++++++--
- meson_options.txt          |  3 ++
+ .../gst/subparse/gstsubparse.c                | 60 +++++++++++++++++--
+ .../gst-plugins-base/gst/subparse/meson.build | 12 +++-
+ .../gst-plugins-base/meson_options.txt        |  3 +
  3 files changed, 67 insertions(+), 8 deletions(-)
 
-diff --git a/gst/subparse/gstsubparse.c b/gst/subparse/gstsubparse.c
-index e9bb24ef2..dcb5fb0b6 100644
---- a/gst/subparse/gstsubparse.c
-+++ b/gst/subparse/gstsubparse.c
+diff --git a/subprojects/gst-plugins-base/gst/subparse/gstsubparse.c b/subprojects/gst-plugins-base/gst/subparse/gstsubparse.c
+index eaae3cf856..520de88003 100644
+--- a/subprojects/gst-plugins-base/gst/subparse/gstsubparse.c
++++ b/subprojects/gst-plugins-base/gst/subparse/gstsubparse.c
 @@ -31,6 +31,10 @@
  #include <sys/types.h>
  #include <glib.h>
@@ -130,10 +130,10 @@ index e9bb24ef2..dcb5fb0b6 100644
    return ret;
  }
  
-diff --git a/gst/subparse/meson.build b/gst/subparse/meson.build
-index 7be6c2bec..68d02fcbb 100644
---- a/gst/subparse/meson.build
-+++ b/gst/subparse/meson.build
+diff --git a/subprojects/gst-plugins-base/gst/subparse/meson.build b/subprojects/gst-plugins-base/gst/subparse/meson.build
+index 7be6c2becc..68d02fcbb1 100644
+--- a/subprojects/gst-plugins-base/gst/subparse/meson.build
++++ b/subprojects/gst-plugins-base/gst/subparse/meson.build
 @@ -8,12 +8,20 @@ subparse_sources = [
    'mpl2parse.c',
    'qttextparse.c',
@@ -157,10 +157,10 @@ index 7be6c2bec..68d02fcbb 100644
    install : true,
    install_dir : plugins_install_dir,
  )
-diff --git a/meson_options.txt b/meson_options.txt
-index 7010b9162..1b2771425 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
+diff --git a/subprojects/gst-plugins-base/meson_options.txt b/subprojects/gst-plugins-base/meson_options.txt
+index 7010b91626..1b2771425b 100644
+--- a/subprojects/gst-plugins-base/meson_options.txt
++++ b/subprojects/gst-plugins-base/meson_options.txt
 @@ -66,6 +66,9 @@ option('x11', type : 'feature', value : 'auto', description : 'X11 ximagesink pl
  option('xshm', type : 'feature', value : 'auto', description : 'X11 shared memory support for X11 plugins')
  option('xvideo', type : 'feature', value : 'auto', description : 'X11 XVideo xvimagesink plugin')
