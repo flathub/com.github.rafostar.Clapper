@@ -6,16 +6,16 @@ Subject: [PATCH 1/2] gl: Move supported formats init to private header
 This function can be shared between other GL elements
 to allow filtering video formats by what GL context supports.
 ---
- gst-libs/gst/gl/gstglcolorconvert.c   | 87 +--------------------------
- gst-libs/gst/gl/gstglformat.c         | 87 +++++++++++++++++++++++++++
- gst-libs/gst/gl/gstglformat_private.h | 33 ++++++++++
+ .../gst-plugins-base/gst-libs/gst/gl/gstglcolorconvert.c   | 87 +--------------------------
+ .../gst-plugins-base/gst-libs/gst/gl/gstglformat.c         | 87 +++++++++++++++++++++++++++
+ .../gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h | 33 ++++++++++
  3 files changed, 122 insertions(+), 85 deletions(-)
  create mode 100644 gst-libs/gst/gl/gstglformat_private.h
 
-diff --git a/gst-libs/gst/gl/gstglcolorconvert.c b/gst-libs/gst/gl/gstglcolorconvert.c
+diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglcolorconvert.c b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglcolorconvert.c
 index cf5f159c6..ab18b7703 100644
---- a/gst-libs/gst/gl/gstglcolorconvert.c
-+++ b/gst-libs/gst/gl/gstglcolorconvert.c
+--- a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglcolorconvert.c
++++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglcolorconvert.c
 @@ -30,6 +30,7 @@
  #include "gl.h"
  #include "gstglfuncs.h"
@@ -124,10 +124,10 @@ index cf5f159c6..ab18b7703 100644
    gst_value_intersect (&supported_rgb_formats, &rgb_formats,
        &supported_formats);
  
-diff --git a/gst-libs/gst/gl/gstglformat.c b/gst-libs/gst/gl/gstglformat.c
+diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c
 index d1ce3f03a..88724ed14 100644
---- a/gst-libs/gst/gl/gstglformat.c
-+++ b/gst-libs/gst/gl/gstglformat.c
+--- a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c
++++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c
 @@ -33,6 +33,7 @@
  #endif
  
@@ -226,11 +226,11 @@ index d1ce3f03a..88724ed14 100644
 +#endif
 +  }
 +}
-diff --git a/gst-libs/gst/gl/gstglformat_private.h b/gst-libs/gst/gl/gstglformat_private.h
+diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h
 new file mode 100644
 index 000000000..f078e4181
 --- /dev/null
-+++ b/gst-libs/gst/gl/gstglformat_private.h
++++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h
 @@ -0,0 +1,33 @@
 +/*
 + * GStreamer
@@ -281,10 +281,10 @@ of the supported by user hardware formats.
  gst-libs/gst/gl/gstglupload.c | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/gst-libs/gst/gl/gstglupload.c b/gst-libs/gst/gl/gstglupload.c
+diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglupload.c b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglupload.c
 index 46fc0c700..3c4035308 100644
---- a/gst-libs/gst/gl/gstglupload.c
-+++ b/gst-libs/gst/gl/gstglupload.c
+--- a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglupload.c
++++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglupload.c
 @@ -28,6 +28,7 @@
  #include "gl.h"
  #include "gstglupload.h"

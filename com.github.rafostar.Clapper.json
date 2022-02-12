@@ -34,12 +34,6 @@
         "lib/ffmpeg.json",
         "lib/uchardet.json",
         "gstreamer-1.0/gstreamer.json",
-        "gstreamer-1.0/gst-plugins-base.json",
-        "gstreamer-1.0/gst-plugins-good.json",
-        "gstreamer-1.0/gst-plugins-bad.json",
-        "gstreamer-1.0/gst-plugins-ugly.json",
-        "gstreamer-1.0/gst-libav.json",
-        "gstreamer-1.0/gstreamer-vaapi.json",
         "lib/gtk4.json",
         "lib/libadwaita.json",
         "lib/gtuber.json",
@@ -55,6 +49,10 @@
                     "url": "https://github.com/Rafostar/clapper.git",
                     "tag": "0.4.1",
                     "commit": "7a508fef392964e1c33e1795b0e1300ef48c0352"
+                },
+                {
+                    "type": "patch",
+                    "path": "clapper-remove-yt-prefs.patch"
                 }
             ]
         }

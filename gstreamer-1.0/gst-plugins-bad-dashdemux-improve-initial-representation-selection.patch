@@ -1,20 +1,20 @@
-From 0214559fc907c5d0b51411b66b46f4503df51d15 Mon Sep 17 00:00:00 2001
+From 1f4f61e8a3cfda508a05d731cda5485fd4144b10 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
-Date: Sun, 12 Dec 2021 17:51:49 +0100
+Date: Fri, 11 Feb 2022 12:28:20 +0100
 Subject: [PATCH] dashdemux: Improve initial representation selection
 
 Do not always start with lowest quality possible. Use properties set
 by user to select best allowed initial representation at startup too.
 ---
- ext/dash/gstdashdemux.c   | 10 +++++++--
- ext/dash/gstmpdclient.c   | 22 ++++++++++++++++---
- ext/dash/gstmpdclient.h   |  2 +-
+ .../gst-plugins-bad/ext/dash/gstdashdemux.c   | 10 +++++++--
+ .../gst-plugins-bad/ext/dash/gstmpdclient.c   | 22 ++++++++++++++++---
+ .../gst-plugins-bad/ext/dash/gstmpdclient.h   |  2 +-
  3 files changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/ext/dash/gstdashdemux.c b/ext/dash/gstdashdemux.c
+diff --git a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 index a71e72dbcf..940c942a41 100644
---- a/ext/dash/gstdashdemux.c
-+++ b/ext/dash/gstdashdemux.c
+--- a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
++++ b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 @@ -756,13 +756,19 @@ gst_dash_demux_setup_mpdparser_streams (GstDashDemux * demux,
  {
    gboolean has_streams = FALSE;
@@ -37,10 +37,10 @@ index a71e72dbcf..940c942a41 100644
    }
  
    if (!has_streams) {
-diff --git a/ext/dash/gstmpdclient.c b/ext/dash/gstmpdclient.c
+diff --git a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
 index fdaaa659c8..7f6889f843 100644
---- a/ext/dash/gstmpdclient.c
-+++ b/ext/dash/gstmpdclient.c
+--- a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
++++ b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
 @@ -1597,11 +1597,14 @@ gst_mpd_client_get_adaptation_sets (GstMPDClient * client)
  
  gboolean
@@ -81,10 +81,10 @@ index fdaaa659c8..7f6889f843 100644
  #endif
  
    if (!representation) {
-diff --git a/ext/dash/gstmpdclient.h b/ext/dash/gstmpdclient.h
+diff --git a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
 index bc422fc97c..502c1b4038 100644
---- a/ext/dash/gstmpdclient.h
-+++ b/ext/dash/gstmpdclient.h
+--- a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
++++ b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
 @@ -69,7 +69,7 @@ void gst_mpd_client_fetch_on_load_external_resources (GstMPDClient * client);
  
  /* Streaming management */
@@ -95,5 +95,5 @@ index bc422fc97c..502c1b4038 100644
  
  GstClockTime gst_mpd_client_get_next_fragment_duration (GstMPDClient * client, GstActiveStream * stream);
 -- 
-2.33.1
+GitLab
 

@@ -18,10 +18,10 @@ Subject: [PATCH] dashdemux: fix segmentBase type with 'sidx' not using range
 
 https://bugzilla.gnome.org/show_bug.cgi?id=788763
 
-diff --git a/ext/dash/gstdashdemux.c b/ext/dash/gstdashdemux.c
+diff --git a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 index e38240800..7554a44b2 100644
---- a/ext/dash/gstdashdemux.c
-+++ b/ext/dash/gstdashdemux.c
+--- a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
++++ b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 @@ -1356,7 +1356,7 @@ gst_dash_demux_stream_update_fragment_info (GstAdaptiveDemuxStream * stream)
              stream->fragment.range_start + entry->size - 1;
          dashstream->actual_position += entry->duration;
@@ -68,10 +68,10 @@ index e38240800..7554a44b2 100644
            /* Need to jump to the requested SIDX entry. Push everything up to
             * the SIDX box below and let the caller handle everything else */
            *sidx_seek_needed = TRUE;
-diff --git a/gst-libs/gst/adaptivedemux/gstadaptivedemux.c b/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
+diff --git a/subprojects/gst-plugins-bad/gst-libs/gst/adaptivedemux/gstadaptivedemux.c b/subprojects/gst-plugins-bad/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
 index a495ec2e7..3a09a76b1 100644
---- a/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
-+++ b/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
+--- a/subprojects/gst-plugins-bad/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
++++ b/subprojects/gst-plugins-bad/gst-libs/gst/adaptivedemux/gstadaptivedemux.c
 @@ -3378,6 +3378,9 @@ gst_adaptive_demux_stream_download_header_fragment (GstAdaptiveDemuxStream *
        ret = gst_adaptive_demux_stream_download_uri (demux, stream,
            stream->fragment.index_uri, stream->fragment.index_range_start,
