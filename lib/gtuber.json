@@ -15,6 +15,10 @@
             "type": "git",
             "url": "https://github.com/Rafostar/gtuber.git",
             "commit": "9b10c99fa86430f6b4f7a178d72d120001e6c0c2"
+        },
+        {
+            "type": "patch",
+            "path": "gtuber-use-libsoup2.patch"
         }
     ]
 }
