@@ -15,6 +15,10 @@
         "-Dbuild-examples=false",
         "-Dbuild-tests=false"
     ],
+    "cleanup": [
+        "/bin/gtk4-builder-tool",
+        "/bin/gtk4-encode-symbolic-svg"
+    ],
     "sources": [
         {
             "type": "git",
