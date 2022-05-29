@@ -27,6 +27,10 @@
         },
         {
             "type": "patch",
+            "path": "gtk4-respect-es-api.patch"
+        },
+        {
+            "type": "patch",
             "path": "gtk4-disable-meson-gnome-post-install.patch"
         }
     ]
