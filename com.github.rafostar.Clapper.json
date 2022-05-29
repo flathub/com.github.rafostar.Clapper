@@ -20,7 +20,6 @@
     ],
     "modules": [
         "shared-modules/gudev/gudev.json",
-        "lib/pango.json",
         "lib/libsass.json",
         "lib/sassc.json",
         "lib/liba52.json",
