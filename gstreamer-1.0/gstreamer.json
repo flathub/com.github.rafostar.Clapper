@@ -89,6 +89,10 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-base-do-not-use-drm-modifiers-on-desktop.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-good-matroska-fix-attachments-detection.patch"
         },
         {
