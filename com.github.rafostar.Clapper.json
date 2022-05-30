@@ -16,12 +16,10 @@
         "--filesystem=xdg-videos",
         "--own-name=org.mpris.MediaPlayer2.Clapper",
         "--talk-name=org.gnome.Shell",
-        "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0",
-        "--env=GST_VAAPI_ALL_DRIVERS=1"
+        "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0"
     ],
     "modules": [
         "shared-modules/gudev/gudev.json",
-        "lib/pango.json",
         "lib/libsass.json",
         "lib/sassc.json",
         "lib/liba52.json",
@@ -41,18 +39,15 @@
             "name": "clapper",
             "buildsystem": "meson",
             "config-opts": [
-                "--buildtype=release"
+                "--buildtype=release",
+                "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.4.1",
-                    "commit": "7a508fef392964e1c33e1795b0e1300ef48c0352"
-                },
-                {
-                    "type": "patch",
-                    "path": "clapper-remove-yt-prefs.patch"
+                    "tag": "0.5.1",
+                    "commit": "e5723cd25a6cd0aa0f2c965ef3300bfa19e82278"
                 }
             ]
         }

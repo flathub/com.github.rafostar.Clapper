@@ -67,8 +67,8 @@
         {
             "type": "git",
             "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
-            "tag": "1.20.1",
-            "commit": "4bbb293eacbb795b45152e97796092ebbdee9d28",
+            "tag": "1.20.2",
+            "commit": "8dbfc89a850d484a27937eb882978251bfce06b3",
             "disable-submodules": true
         },
         {
@@ -86,6 +86,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-base-glupload-filter-formats.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-base-do-not-use-drm-modifiers-on-desktop.patch"
         },
         {
             "type": "patch",

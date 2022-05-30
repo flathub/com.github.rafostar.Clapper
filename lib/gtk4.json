@@ -3,13 +3,12 @@
     "buildsystem": "meson",
     "config-opts": [
         "--buildtype=release",
-        "--wrap-mode=nofallback",
-        "-Dbroadway-backend=true",
+        "--wrap-mode=nodownload",
+
         "-Dwin32-backend=false",
         "-Dmacos-backend=false",
         "-Dmedia-ffmpeg=disabled",
         "-Dprint-cups=disabled",
-        "-Dprint-cloudprint=disabled",
         "-Dintrospection=enabled",
         "-Ddemos=false",
         "-Dbuild-examples=false",
@@ -23,12 +22,12 @@
         {
             "type": "git",
             "url": "https://gitlab.gnome.org/GNOME/gtk.git",
-            "tag": "4.4.1",
-            "commit": "3090fbac82d86543cd198ddf38d4044e05c87d91"
+            "tag": "4.6.4",
+            "commit": "1e6bad6c4f412dc0eb7b2f508cb4465929a04303"
         },
         {
             "type": "patch",
-            "path": "gtk4-popover-unrealize.patch"
+            "path": "gtk4-respect-es-api.patch"
         },
         {
             "type": "patch",
