@@ -22,12 +22,8 @@
         {
             "type": "git",
             "url": "https://gitlab.gnome.org/GNOME/gtk.git",
-            "tag": "4.6.4",
-            "commit": "1e6bad6c4f412dc0eb7b2f508cb4465929a04303"
-        },
-        {
-            "type": "patch",
-            "path": "gtk4-respect-es-api.patch"
+            "tag": "4.7.2",
+            "commit": "6eb3548192a0c1cd8feb961aa01f6779c7e82f84"
         },
         {
             "type": "patch",
