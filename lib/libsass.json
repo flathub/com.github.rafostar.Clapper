@@ -5,8 +5,7 @@
         {
             "type": "git",
             "url": "https://github.com/lazka/libsass.git",
-            "branch": "meson",
-            "commit": "302397c0c8ae2d7ab02f45ea461c2c3d768f248e"
+            "commit": "aac79dccd3c8f7e8f22125f87a119f3b1ee9d487"
         }
     ]
 }
