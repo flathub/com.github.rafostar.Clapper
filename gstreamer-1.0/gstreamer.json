@@ -67,8 +67,8 @@
         {
             "type": "git",
             "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
-            "tag": "1.20.3",
-            "commit": "ccf22e315cedf81e0075ab179ffb1b733da5206e",
+            "tag": "1.20.5",
+            "commit": "f7806a854aad960eae3288db4a67a574f92428fe",
             "disable-submodules": true
         },
         {
@@ -114,10 +114,6 @@
         {
             "type": "patch",
             "path": "gst-plugins-bad-workaround-playbin2-missing-videometa.patch"
-        },
-        {
-            "type": "patch",
-            "path": "gst-plugins-bad-vah265dec-crash-fix-backport.patch"
         }
     ]
 }
