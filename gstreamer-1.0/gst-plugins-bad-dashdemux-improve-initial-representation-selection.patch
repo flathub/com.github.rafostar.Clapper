@@ -1,4 +1,4 @@
-From 1f4f61e8a3cfda508a05d731cda5485fd4144b10 Mon Sep 17 00:00:00 2001
+From 0e194647776485530056eea3b5b0d365b5485c3b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Rafa=C5=82=20Dzi=C4=99giel?= <rafostar.github@gmail.com>
 Date: Fri, 11 Feb 2022 12:28:20 +0100
 Subject: [PATCH] dashdemux: Improve initial representation selection
@@ -6,13 +6,14 @@ Subject: [PATCH] dashdemux: Improve initial representation selection
 Do not always start with lowest quality possible. Use properties set
 by user to select best allowed initial representation at startup too.
 ---
- .../gst-plugins-bad/ext/dash/gstdashdemux.c   | 10 +++++++--
- .../gst-plugins-bad/ext/dash/gstmpdclient.c   | 22 ++++++++++++++++---
+ .../gst-plugins-bad/ext/dash/gstdashdemux.c   | 10 +++-
+ .../gst-plugins-bad/ext/dash/gstmpdclient.c   | 30 +++++++-----
  .../gst-plugins-bad/ext/dash/gstmpdclient.h   |  2 +-
- 3 files changed, 28 insertions(+), 6 deletions(-)
+ .../tests/check/elements/dash_mpd.c           | 48 ++++++++++---------
+ 4 files changed, 52 insertions(+), 38 deletions(-)
 
 diff --git a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
-index a71e72dbcf..940c942a41 100644
+index 51abc6caf33..c23cea4d05a 100644
 --- a/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 +++ b/subprojects/gst-plugins-bad/ext/dash/gstdashdemux.c
 @@ -756,13 +756,19 @@ gst_dash_demux_setup_mpdparser_streams (GstDashDemux * demux,
@@ -38,10 +39,10 @@ index a71e72dbcf..940c942a41 100644
  
    if (!has_streams) {
 diff --git a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
-index fdaaa659c8..7f6889f843 100644
+index 60a523c2018..650fee9be98 100644
 --- a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
 +++ b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.c
-@@ -1597,11 +1597,14 @@ gst_mpd_client_get_adaptation_sets (GstMPDClient * client)
+@@ -1610,11 +1610,14 @@ gst_mpd_client_get_adaptation_sets (GstMPDClient * client)
  
  gboolean
  gst_mpd_client_setup_streaming (GstMPDClient * client,
@@ -58,10 +59,15 @@ index fdaaa659c8..7f6889f843 100644
  
    rep_list = adapt_set->Representations;
    if (!rep_list) {
-@@ -1629,8 +1632,21 @@ gst_mpd_client_setup_streaming (GstMPDClient * client,
-     representation = gst_mpd_client_get_lowest_representation (rep_list);
-   }
- #else
+@@ -1630,21 +1633,22 @@ gst_mpd_client_setup_streaming (GstMPDClient * client,
+ 
+   GST_DEBUG ("0. Current stream %p", stream);
+ 
+-#if 0
+-  /* fast start */
+-  representation =
+-      gst_mpdparser_get_representation_with_max_bandwidth (rep_list,
+-      stream->max_bandwidth);
 +  rep_id = gst_mpd_client_get_rep_idx_with_max_bandwidth (rep_list,
 +      max_bandwidth, max_video_width, max_video_height,
 +      max_video_framerate_n, max_video_framerate_d);
@@ -73,16 +79,22 @@ index fdaaa659c8..7f6889f843 100644
 +    if (best_rep)
 +      representation = (GstMPDRepresentationNode *) best_rep->data;
 +  }
-+
-   /* slow start */
--  representation = gst_mpd_client_get_lowest_representation (rep_list);
-+  if (!representation)
-+    representation = gst_mpd_client_get_lowest_representation (rep_list);
- #endif
  
    if (!representation) {
+-    GST_WARNING
+-        ("Can not retrieve a representation with the requested bandwidth");
++    GST_WARNING ("No representation with the requested bandwidth");
+     representation = gst_mpd_client_get_lowest_representation (rep_list);
+   }
+-#else
+-  /* slow start */
+-  representation = gst_mpd_client_get_lowest_representation (rep_list);
+-#endif
+ 
+   if (!representation) {
+     GST_WARNING ("No valid representation in the MPD file, aborting...");
 diff --git a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
-index bc422fc97c..502c1b4038 100644
+index b15b5cad3b2..1983524489b 100644
 --- a/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
 +++ b/subprojects/gst-plugins-bad/ext/dash/gstmpdclient.h
 @@ -69,7 +69,7 @@ void gst_mpd_client_fetch_on_load_external_resources (GstMPDClient * client);
@@ -94,6 +106,217 @@ index bc422fc97c..502c1b4038 100644
  gboolean gst_mpd_client_setup_representation (GstMPDClient *client, GstActiveStream *stream, GstMPDRepresentationNode *representation);
  
  GstClockTime gst_mpd_client_get_next_fragment_duration (GstMPDClient * client, GstActiveStream * stream);
+diff --git a/subprojects/gst-plugins-bad/tests/check/elements/dash_mpd.c b/subprojects/gst-plugins-bad/tests/check/elements/dash_mpd.c
+index 1d347b0a54e..1cd551bd2fa 100644
+--- a/subprojects/gst-plugins-bad/tests/check/elements/dash_mpd.c
++++ b/subprojects/gst-plugins-bad/tests/check/elements/dash_mpd.c
+@@ -83,6 +83,10 @@ duration_to_clocktime (guint year, guint month, guint day, guint hour,
+           millisecond));
+ }
+ 
++/* Setup streaming with default properties values */
++#define setup_streaming_simple(cl, node) \
++    gst_mpd_client_setup_streaming(cl, node, 0, 0, 0, 0, 1);
++
+ /*
+  * Test to ensure a simple mpd file successfully parses.
+  *
+@@ -931,7 +935,7 @@ GST_START_TEST (dash_mpdparser_period_segmentTemplateWithPresentationTimeOffset)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+   fail_if (activeStream == NULL);
+@@ -3111,13 +3115,13 @@ GST_START_TEST (dash_mpdparser_bitstreamSwitching_inheritance)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* setup streaming from the second adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 1);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* 2 active streams */
+@@ -3325,7 +3329,7 @@ GST_START_TEST (dash_mpdparser_setup_streaming)
+   fail_if (adapt_set == NULL);
+ 
+   /* setup streaming from the adaptation set */
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   gst_mpd_client_free (mpdclient);
+@@ -3658,7 +3662,7 @@ GST_START_TEST (dash_mpdparser_activeStream_selection)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* 1 active streams */
+@@ -3668,7 +3672,7 @@ GST_START_TEST (dash_mpdparser_activeStream_selection)
+   /* setup streaming from the second adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 1);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* 2 active streams */
+@@ -3678,7 +3682,7 @@ GST_START_TEST (dash_mpdparser_activeStream_selection)
+   /* setup streaming from the third adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 2);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* 3 active streams */
+@@ -3757,7 +3761,7 @@ GST_START_TEST (dash_mpdparser_activeStream_parameters)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* 1 active streams */
+@@ -3849,7 +3853,7 @@ GST_START_TEST (dash_mpdparser_get_audio_languages)
+   for (i = 0; i < adaptationSetsCount; i++) {
+     adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, i);
+     fail_if (adapt_set == NULL);
+-    ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++    ret = setup_streaming_simple (mpdclient, adapt_set);
+     assert_equals_int (ret, TRUE);
+   }
+   activeStreams = gst_mpd_client_get_nb_active_stream (mpdclient);
+@@ -3901,7 +3905,7 @@ setup_mpd_client (const gchar * xml)
+   for (i = 0; i < adaptationSetsCount; i++) {
+     adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, i);
+     fail_if (adapt_set == NULL);
+-    ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++    ret = setup_streaming_simple (mpdclient, adapt_set);
+     assert_equals_int (ret, TRUE);
+   }
+   activeStreams = gst_mpd_client_get_nb_active_stream (mpdclient);
+@@ -4350,7 +4354,7 @@ GST_START_TEST (dash_mpdparser_get_streamPresentationOffset)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* test the stream presentation time offset */
+@@ -4421,7 +4425,7 @@ GST_START_TEST (dash_mpdparser_segments)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -4556,7 +4560,7 @@ GST_START_TEST (dash_mpdparser_headers)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   /* get segment url and range from segment Initialization */
+@@ -4632,7 +4636,7 @@ GST_START_TEST (dash_mpdparser_fragments)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+   fail_if (activeStream == NULL);
+@@ -4781,7 +4785,7 @@ GST_START_TEST (dash_mpdparser_inherited_segmentURL)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -4867,7 +4871,7 @@ GST_START_TEST (dash_mpdparser_segment_list)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -4948,7 +4952,7 @@ GST_START_TEST (dash_mpdparser_segment_template)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -5066,7 +5070,7 @@ GST_START_TEST (dash_mpdparser_segment_timeline)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -5250,7 +5254,7 @@ GST_START_TEST (dash_mpdparser_multiple_inherited_segmentURL)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -5368,7 +5372,7 @@ GST_START_TEST (dash_mpdparser_multipleSegmentURL)
+   /* setup streaming from the first adaptation set */
+   adapt_set = (GstMPDAdaptationSetNode *) g_list_nth_data (adaptationSets, 0);
+   fail_if (adapt_set == NULL);
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, TRUE);
+ 
+   activeStream = gst_mpd_client_get_active_stream_by_index (mpdclient, 0);
+@@ -5822,7 +5826,7 @@ GST_START_TEST (dash_mpdparser_unmatched_segmentTimeline_segmentURL)
+    * Should fail because the second S node does not have a  matching
+    * SegmentURL node
+    */
+-  ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set);
++  ret = setup_streaming_simple (mpdclient, adapt_set);
+   assert_equals_int (ret, FALSE);
+ 
+   gst_mpd_client_free (mpdclient);
+@@ -5989,7 +5993,7 @@ GST_START_TEST (dash_mpdparser_maximum_segment_duration)
+   for (iter = adapt_sets; iter; iter = g_list_next (iter)) {
+     GstMPDAdaptationSetNode *adapt_set_node = iter->data;
+ 
+-    ret = gst_mpd_client_setup_streaming (mpdclient, adapt_set_node);
++    ret = setup_streaming_simple (mpdclient, adapt_set_node);
+     assert_equals_int (ret, TRUE);
+   }
+   dur = gst_mpd_client_get_maximum_segment_duration (mpdclient);
 -- 
 GitLab
 

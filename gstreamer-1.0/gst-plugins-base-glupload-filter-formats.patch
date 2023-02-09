@@ -24,7 +24,7 @@ index cf5f159c6..ab18b7703 100644
  
  /**
   * SECTION:gstglcolorconvert
-@@ -994,90 +995,6 @@ _init_value_string_list (GValue * list, ...)
+@@ -994,95 +995,6 @@ _init_value_string_list (GValue * list, ...)
    va_end (args);
  }
  
@@ -110,6 +110,11 @@ index cf5f159c6..ab18b7703 100644
 -    _append_value_string_list (supported_formats, "Y412_BE", NULL);
 -#endif
 -  }
+-
+-  if (!context || USING_GLES3 (context) || USING_OPENGL30 (context)) {
+-    _append_value_string_list (supported_formats, "NV12_16L32S", "NV12_4L4",
+-        NULL);
+-  }
 -}
 -
  /* copies the given caps */
@@ -128,7 +133,7 @@ diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c b/subpro
 index d1ce3f03a..88724ed14 100644
 --- a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c
 +++ b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat.c
-@@ -33,6 +33,7 @@
+@@ -33,12 +33,15 @@
  #endif
  
  #include "gstglformat.h"
@@ -136,7 +141,15 @@ index d1ce3f03a..88724ed14 100644
  
  #include "gstglcontext.h"
  #include "gstglfuncs.h"
-@@ -597,3 +598,89 @@ gst_gl_texture_target_to_buffer_pool_option (GstGLTextureTarget target)
+ 
+ #define USING_OPENGL(context) (gst_gl_context_check_gl_version (context, GST_GL_API_OPENGL, 1, 0))
+ #define USING_OPENGL3(context) (gst_gl_context_check_gl_version (context, GST_GL_API_OPENGL3, 3, 1))
++#define USING_OPENGL30(context) \
++  (gst_gl_context_check_gl_version (context, GST_GL_API_OPENGL, 3, 0) || USING_OPENGL3(context))
+ #define USING_GLES(context) (gst_gl_context_check_gl_version (context, GST_GL_API_GLES, 1, 0))
+ #define USING_GLES2(context) (gst_gl_context_check_gl_version (context, GST_GL_API_GLES2, 2, 0))
+ #define USING_GLES3(context) (gst_gl_context_check_gl_version (context, GST_GL_API_GLES2, 3, 0))
+@@ -597,3 +598,94 @@ gst_gl_texture_target_to_buffer_pool_option (GstGLTextureTarget target)
        return NULL;
    }
  }
@@ -225,6 +238,11 @@ index d1ce3f03a..88724ed14 100644
 +    _append_value_string_list (supported_formats, "Y412_BE", NULL);
 +#endif
 +  }
++
++  if (!context || USING_GLES3 (context) || USING_OPENGL30 (context)) {
++    _append_value_string_list (supported_formats, "NV12_16L32S", "NV12_4L4",
++        NULL);
++  }
 +}
 diff --git a/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h b/subprojects/gst-plugins-base/gst-libs/gst/gl/gstglformat_private.h
 new file mode 100644
@@ -293,7 +311,7 @@ index 46fc0c700..3c4035308 100644
  
  #if GST_GL_HAVE_PLATFORM_EGL
  #include "egl/gsteglimage.h"
-@@ -886,7 +887,6 @@ _direct_dma_buf_upload_transform_caps (gpointer impl, GstGLContext * context,
+@@ -886,18 +887,15 @@ _direct_dma_buf_upload_transform_caps (gpointer impl, GstGLContext * context,
      gint i, n;
      GstCaps *tmp;
      GValue formats = G_VALUE_INIT;
@@ -301,9 +319,7 @@ index 46fc0c700..3c4035308 100644
  
      ret =
          _set_caps_features_with_passthrough (caps,
-@@ -896,12 +896,10 @@ _direct_dma_buf_upload_transform_caps (gpointer impl, GstGLContext * context,
-         GST_CAPS_FEATURE_MEMORY_SYSTEM_MEMORY, passthrough);
-     gst_caps_append (ret, tmp);
+         GST_CAPS_FEATURE_MEMORY_DMABUF, passthrough);
  
 -    g_value_init (&formats, GST_TYPE_LIST);
 -    gst_value_deserialize (&formats, format_str);
