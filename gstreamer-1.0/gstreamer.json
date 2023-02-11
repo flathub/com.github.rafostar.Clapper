@@ -101,6 +101,10 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-good-dashdemux2-play-last-subfragment.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-bad-dashdemux-sidx-range-download.patch"
         },
         {
