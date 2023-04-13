@@ -6,12 +6,26 @@ WARNING: This is meant only for sinks which supports this.
 Not every sink does. Do not upstream!
 ---
 diff --git a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech264dec.c b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech264dec.c
-index 9c7260b85a..d0a14e3c5e 100644
+index 4ae62e9dc2..b1c895ed87 100644
 --- a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech264dec.c
 +++ b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech264dec.c
-@@ -403,8 +403,7 @@ gst_v4l2_codec_h264_dec_decide_allocation (GstVideoDecoder * decoder,
-   GstV4l2CodecH264Dec *self = GST_V4L2_CODEC_H264_DEC (decoder);
-   guint min = 0, num_bitstream;
+@@ -419,8 +419,7 @@ gst_v4l2_codec_h264_dec_decide_allocation (GstVideoDecoder * decoder,
+   if (self->streaming)
+     return TRUE;
+ 
+-  self->has_videometa = gst_query_find_allocation_meta (query,
+-      GST_VIDEO_META_API_TYPE, NULL);
++  self->has_videometa = TRUE;
+ 
+   g_clear_object (&self->src_pool);
+   g_clear_object (&self->src_allocator);
+diff --git a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech265dec.c b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech265dec.c
+index 242c855c43..cd8d172723 100644
+--- a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech265dec.c
++++ b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codech265dec.c
+@@ -448,8 +448,7 @@ gst_v4l2_codec_h265_dec_decide_allocation (GstVideoDecoder * decoder,
+   if (self->streaming)
+     return TRUE;
  
 -  self->has_videometa = gst_query_find_allocation_meta (query,
 -      GST_VIDEO_META_API_TYPE, NULL);
@@ -20,10 +34,10 @@ index 9c7260b85a..d0a14e3c5e 100644
    g_clear_object (&self->src_pool);
    g_clear_object (&self->src_allocator);
 diff --git a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecmpeg2dec.c b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecmpeg2dec.c
-index e3a31dab53..a095e64ed4 100644
+index 00dd1612de..573fb7ff3a 100644
 --- a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecmpeg2dec.c
 +++ b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecmpeg2dec.c
-@@ -327,8 +327,7 @@ gst_v4l2_codec_mpeg2_dec_decide_allocation (GstVideoDecoder * decoder,
+@@ -337,8 +337,7 @@ gst_v4l2_codec_mpeg2_dec_decide_allocation (GstVideoDecoder * decoder,
    GstV4l2CodecMpeg2Dec *self = GST_V4L2_CODEC_MPEG2_DEC (decoder);
    guint min = 0, num_bitstream;
  
@@ -34,12 +48,12 @@ index e3a31dab53..a095e64ed4 100644
    g_clear_object (&self->src_pool);
    g_clear_object (&self->src_allocator);
 diff --git a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp8dec.c b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp8dec.c
-index 6d547c565a..a90e39c89b 100644
+index 2169c96942..043779d500 100644
 --- a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp8dec.c
 +++ b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp8dec.c
-@@ -273,8 +273,7 @@ gst_v4l2_codec_vp8_dec_decide_allocation (GstVideoDecoder * decoder,
-   guint min = 0;
-   guint num_bitstream;
+@@ -286,8 +286,7 @@ gst_v4l2_codec_vp8_dec_decide_allocation (GstVideoDecoder * decoder,
+   if (self->streaming)
+     return TRUE;
  
 -  self->has_videometa = gst_query_find_allocation_meta (query,
 -      GST_VIDEO_META_API_TYPE, NULL);
@@ -48,10 +62,10 @@ index 6d547c565a..a90e39c89b 100644
    g_clear_object (&self->src_pool);
    g_clear_object (&self->src_allocator);
 diff --git a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp9dec.c b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp9dec.c
-index 19cd0a71a2..5ee20fe4fa 100644
+index 164015519c..8259f5c0c3 100644
 --- a/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp9dec.c
 +++ b/subprojects/gst-plugins-bad/sys/v4l2codecs/gstv4l2codecvp9dec.c
-@@ -521,8 +521,7 @@ gst_v4l2_codec_vp9_dec_decide_allocation (GstVideoDecoder * decoder,
+@@ -550,8 +550,7 @@ gst_v4l2_codec_vp9_dec_decide_allocation (GstVideoDecoder * decoder,
    guint min = 0;
    guint num_bitstream;
  
@@ -62,10 +76,10 @@ index 19cd0a71a2..5ee20fe4fa 100644
    g_clear_object (&self->src_pool);
    g_clear_object (&self->src_allocator);
 diff --git a/subprojects/gst-plugins-bad/sys/va/gstvabasedec.c b/subprojects/gst-plugins-bad/sys/va/gstvabasedec.c
-index 8414ecb2ee..323ee80c55 100644
+index 0a1ef5f0f8..0778994966 100644
 --- a/subprojects/gst-plugins-bad/sys/va/gstvabasedec.c
 +++ b/subprojects/gst-plugins-bad/sys/va/gstvabasedec.c
-@@ -466,8 +466,7 @@ gst_va_base_dec_decide_allocation (GstVideoDecoder * decoder, GstQuery * query)
+@@ -500,8 +500,7 @@ gst_va_base_dec_decide_allocation (GstVideoDecoder * decoder, GstQuery * query)
    if (!(caps && gst_video_info_from_caps (&info, caps)))
      goto wrong_caps;
  
@@ -76,10 +90,10 @@ index 8414ecb2ee..323ee80c55 100644
        GST_VIDEO_CROP_META_API_TYPE, NULL);
  
 diff --git a/subprojects/gst-plugins-bad/sys/va/gstvabasetransform.c b/subprojects/gst-plugins-bad/sys/va/gstvabasetransform.c
-index f9cef373ff..c62cd97d33 100644
+index 5ced2fa104..f1b01a4217 100644
 --- a/subprojects/gst-plugins-bad/sys/va/gstvabasetransform.c
 +++ b/subprojects/gst-plugins-bad/sys/va/gstvabasetransform.c
-@@ -389,8 +389,7 @@ gst_va_base_transform_decide_allocation (GstBaseTransform * trans,
+@@ -428,8 +428,7 @@ gst_va_base_transform_decide_allocation (GstBaseTransform * trans,
    else
      gst_query_add_allocation_pool (query, pool, size, min, max);
  

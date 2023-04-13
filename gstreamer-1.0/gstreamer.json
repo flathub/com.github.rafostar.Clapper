@@ -67,8 +67,8 @@
         {
             "type": "git",
             "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
-            "tag": "1.20.5",
-            "commit": "f7806a854aad960eae3288db4a67a574f92428fe",
+            "tag": "1.22.2",
+            "commit": "a8f569e801491204bcd7f1d050bd40a794507a68",
             "disable-submodules": true
         },
         {
@@ -78,10 +78,6 @@
         {
             "type": "patch",
             "path": "gst-plugins-base-autodetect-subtitle-text-encoding.patch"
-        },
-        {
-            "type": "patch",
-            "path": "gst-plugins-base-do-not-set-backbuffer.patch"
         },
         {
             "type": "patch",
@@ -101,15 +97,19 @@
         },
         {
             "type": "patch",
+            "path": "gst-plugins-good-dashdemux2-improve-initial-representation-selection.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-good-dashdemux2-play-last-subfragment.patch"
+        },
+        {
+            "type": "patch",
             "path": "gst-plugins-bad-dashdemux-sidx-range-download.patch"
         },
         {
             "type": "patch",
             "path": "gst-plugins-bad-dashdemux-improve-initial-representation-selection.patch"
-        },
-        {
-            "type": "patch",
-            "path": "gst-plugins-bad-mpdparser-fix-missing-uri-query.patch"
         },
         {
             "type": "patch",
