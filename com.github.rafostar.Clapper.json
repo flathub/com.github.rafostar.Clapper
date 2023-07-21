@@ -42,7 +42,7 @@
             "config-opts": [
                 "--buildtype=release",
                 "-Db_lto=enabled",
-                "-Dgst-plugin=enabled",
+                "-Dgst-plugin=true",
                 "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
