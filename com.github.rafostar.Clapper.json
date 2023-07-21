@@ -1,7 +1,7 @@
 {
     "app-id": "com.github.rafostar.Clapper",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "43",
+    "runtime-version": "44",
     "sdk": "org.gnome.Sdk",
     "command": "com.github.rafostar.Clapper",
     "finish-args": [
@@ -41,6 +41,8 @@
             "buildsystem": "meson",
             "config-opts": [
                 "--buildtype=release",
+                "-Db_lto=enabled",
+                "-Dgst-plugin=enabled",
                 "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
