@@ -41,7 +41,7 @@
             "buildsystem": "meson",
             "config-opts": [
                 "--buildtype=release",
-                "-Db_lto=enabled",
+                "-Db_lto=true",
                 "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
