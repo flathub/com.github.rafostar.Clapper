@@ -25,6 +25,10 @@
             "url": "https://git.ffmpeg.org/ffmpeg.git",
             "tag": "n4.4",
             "commit": "dc91b913b6260e85e1304c74ff7bb3c22a8c9fb1"
+        },
+        {
+            "type": "patch",
+            "path": "ffmpeg-fix-assembly.patch"
         }
     ]
 }
