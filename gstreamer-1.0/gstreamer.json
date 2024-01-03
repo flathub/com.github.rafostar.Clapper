@@ -114,6 +114,10 @@
         {
             "type": "patch",
             "path": "gst-plugins-bad-workaround-playbin2-missing-videometa.patch"
+        },
+        {
+            "type": "patch",
+            "path": "gst-plugins-bad-dvdspu-add-overlay-composition-support.patch"
         }
     ]
 }
