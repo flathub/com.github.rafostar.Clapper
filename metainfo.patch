@@ -1,0 +1,15 @@
+diff --color -Nurp clapper/data/com.github.rafostar.Clapper.metainfo.xml clapper2/data/com.github.rafostar.Clapper.metainfo.xml
+--- clapper/data/com.github.rafostar.Clapper.metainfo.xml	2024-04-01 14:36:36.372336930 +1100
++++ clapper2/data/com.github.rafostar.Clapper.metainfo.xml	2024-04-01 15:10:11.800969830 +1100
+@@ -231,10 +231,6 @@
+     <control>touch</control>
+   </recommends>
+   <requires>
+-    <display_length compare="ge">small</display_length>
++    <display_length compare="ge">360</display_length>
+   </requires>
+-  <custom>
+-    <value key="Purism::form_factor">workstation</value>
+-    <value key="Purism::form_factor">mobile</value>
+-  </custom>
+ </component>
