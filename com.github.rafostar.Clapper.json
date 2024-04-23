@@ -1,9 +1,18 @@
 {
     "app-id": "com.github.rafostar.Clapper",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "44",
+    "runtime-version": "45",
     "sdk": "org.gnome.Sdk",
-    "command": "com.github.rafostar.Clapper",
+    "add-extensions": {
+        "org.freedesktop.Platform.ffmpeg-full": {
+            "version": "23.08",
+            "directory": "lib/ffmpeg",
+            "add-ld-path": ".",
+            "no-autodownload": false,
+            "autodelete": false
+        }
+    },
+    "command": "clapper",
     "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -17,13 +26,10 @@
         "--filesystem=xdg-run/gvfsd",
         "--own-name=org.mpris.MediaPlayer2.Clapper",
         "--talk-name=org.gtk.vfs.*",
-        "--talk-name=org.gnome.Shell",
         "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0"
     ],
     "modules": [
         "shared-modules/gudev/gudev.json",
-        "lib/libsass.json",
-        "lib/sassc.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
         "lib/libdv.json",
@@ -31,33 +37,35 @@
         "lib/libdvdread.json",
         "lib/libdvdnav.json",
         "lib/libass.json",
-        "lib/ffmpeg.json",
         "lib/uchardet.json",
+        "lib/libmicrodns.json",
         "gstreamer-1.0/gstreamer.json",
-        "lib/libadwaita.json",
         "lib/gtuber.json",
         {
             "name": "clapper",
             "buildsystem": "meson",
             "config-opts": [
                 "--buildtype=release",
+                "-Dclapper-app=enabled",
+                "-Ddiscoverer=enabled",
+                "-Dmpris=enabled",
+                "-Dserver=enabled",
+                "-Dintrospection=disabled",
+                "-Dvapi=disabled",
                 "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.5.2",
-                    "commit": "23bb253ca2400fb392222dba826f199a1d036bd9"
-                },
-                {
-                    "type": "patch",
-                    "path": "metainfo.patch"
+                    "tag": "0.6.0",
+                    "commit": "f0f4801819e389b6a88ce68cd8e9f77afec71bd9"
                 }
             ]
         }
     ],
     "cleanup-commands": [
+        "mkdir -p /app/lib/ffmpeg",
         "ln -s /lib/$FLATPAK_ARCH-linux-*/gstreamer-1.0/libgstpipewire.so /app/lib/gstreamer-1.0/"
     ]
 }
