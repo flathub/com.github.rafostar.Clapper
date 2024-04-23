@@ -31,8 +31,6 @@
     ],
     "modules": [
         "shared-modules/gudev/gudev.json",
-        "lib/libsass.json",
-        "lib/sassc.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
         "lib/libdv.json",
@@ -42,7 +40,6 @@
         "lib/libass.json",
         "lib/uchardet.json",
         "gstreamer-1.0/gstreamer.json",
-        "lib/libadwaita.json",
         "lib/gtuber.json",
         {
             "name": "clapper",
