@@ -3,6 +3,15 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "45",
     "sdk": "org.gnome.Sdk",
+    "add-extensions": {
+        "org.freedesktop.Platform.ffmpeg-full": {
+            "version": "23.08",
+            "directory": "lib/ffmpeg",
+            "add-ld-path": ".",
+            "no-autodownload": false,
+            "autodelete": false
+        }
+    },
     "command": "com.github.rafostar.Clapper",
     "finish-args": [
         "--share=ipc",
@@ -31,7 +40,6 @@
         "lib/libdvdread.json",
         "lib/libdvdnav.json",
         "lib/libass.json",
-        "lib/ffmpeg.json",
         "lib/uchardet.json",
         "gstreamer-1.0/gstreamer.json",
         "lib/libadwaita.json",
@@ -58,6 +66,7 @@
         }
     ],
     "cleanup-commands": [
+        "mkdir -p /app/lib/ffmpeg",
         "ln -s /lib/$FLATPAK_ARCH-linux-*/gstreamer-1.0/libgstpipewire.so /app/lib/gstreamer-1.0/"
     ]
 }
