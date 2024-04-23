@@ -39,6 +39,7 @@
         "lib/libdvdnav.json",
         "lib/libass.json",
         "lib/uchardet.json",
+        "lib/libmicrodns.json",
         "gstreamer-1.0/gstreamer.json",
         "lib/gtuber.json",
         {
