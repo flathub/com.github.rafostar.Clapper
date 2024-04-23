@@ -12,7 +12,7 @@
             "autodelete": false
         }
     },
-    "command": "com.github.rafostar.Clapper",
+    "command": "clapper",
     "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
@@ -47,18 +47,20 @@
             "buildsystem": "meson",
             "config-opts": [
                 "--buildtype=release",
+                "-Dclapper-app=enabled",
+                "-Ddiscoverer=enabled",
+                "-Dmpris=enabled",
+                "-Dserver=enabled",
+                "-Dintrospection=disabled",
+                "-Dvapi=disabled",
                 "-Dc_args=\"-DHAVE_GST_PATCHES=1\""
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.5.2",
-                    "commit": "23bb253ca2400fb392222dba826f199a1d036bd9"
-                },
-                {
-                    "type": "patch",
-                    "path": "metainfo.patch"
+                    "tag": "0.6.0",
+                    "commit": "f0f4801819e389b6a88ce68cd8e9f77afec71bd9"
                 }
             ]
         }
