@@ -39,8 +39,9 @@
         "lib/libass.json",
         "lib/uchardet.json",
         "lib/libmicrodns.json",
+        "lib/libpeas.json",
+        "lib/python-modules.json",
         "gstreamer-1.0/gstreamer.json",
-        "lib/gtuber.json",
         {
             "name": "clapper",
             "buildsystem": "meson",
@@ -50,7 +51,7 @@
                 "-Ddiscoverer=enabled",
                 "-Dmpris=enabled",
                 "-Dserver=enabled",
-                "-Dintrospection=disabled",
+                "-Dintrospection=enabled",
                 "-Dvapi=disabled"
             ],
             "sources": [
@@ -61,7 +62,8 @@
                     "commit": "a449b6b3f5e9c1c6852b26d8387d448ca7d0e756"
                 }
             ]
-        }
+        },
+        "lib/clapper-enhancers.json"
     ],
     "cleanup-commands": [
         "mkdir -p /app/lib/ffmpeg",
