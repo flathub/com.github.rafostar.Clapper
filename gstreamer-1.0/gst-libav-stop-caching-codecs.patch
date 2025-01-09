@@ -17,9 +17,9 @@ index f3fb648d0f..7ed6320f8f 100644
  
 +  gst_plugin_add_dependency_simple (plugin, NULL,
 +      "/app/lib/ffmpeg",
-+      "libavcodec.so.60,"
-+      "libavformat.so.60,"
-+      "libswscale.so.7",
++      "libavcodec.so,"
++      "libavformat.so,"
++      "libswscale.so",
 +      GST_PLUGIN_DEPENDENCY_FLAG_NONE);
 +
    gst_ffmpegaudenc_register (plugin);
