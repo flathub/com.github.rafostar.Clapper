@@ -6,10 +6,6 @@
         "-Dtests=disabled",
         "-Dexamples=disabled"
     ],
-    "cleanup": [
-        "/include",
-        "/lib/pkgconfig"
-    ],
     "sources": [
         {
             "type": "git",
