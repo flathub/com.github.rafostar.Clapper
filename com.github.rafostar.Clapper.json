@@ -10,6 +10,13 @@
             "add-ld-path": ".",
             "no-autodownload": false,
             "autodelete": false
+        },
+        "com.github.rafostar.Clapper.Enhancers": {
+            "directory": "extensions/clapper/enhancers",
+            "add-ld-path": "lib",
+            "bundle" : true,
+            "no-autodownload": false,
+            "autodelete": false
         }
     },
     "command": "clapper",
@@ -26,7 +33,9 @@
         "--filesystem=xdg-run/gvfsd",
         "--own-name=org.mpris.MediaPlayer2.Clapper.*",
         "--talk-name=org.gtk.vfs.*",
-        "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0"
+        "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0",
+        "--env=CLAPPER_ENHANCERS_PATH=/app/extensions/clapper/enhancers/plugins",
+        "--env=PYTHONPATH=/app/extensions/clapper/enhancers/python/site-packages"
     ],
     "modules": [
         "shared-modules/gudev/gudev.json",
@@ -59,11 +68,46 @@
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
                     "tag": "0.8.0",
-                    "commit": "a449b6b3f5e9c1c6852b26d8387d448ca7d0e756"
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^([\\d.]+)$"
+                    }
                 }
             ]
         },
-        "lib/clapper-enhancers.json"
+        {
+            "name": "clapper-enhancers",
+            "buildsystem": "meson",
+            "build-options": {
+                "env": {
+                    "ENHANCERS_DIR": "/app/extensions/clapper/enhancers"
+                }
+            },
+            "config-opts": [
+                "--buildtype=release",
+                "-Denhancersdir=/app/extensions/clapper/enhancers/plugins",
+                "-Dauto_features=enabled"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Rafostar/clapper-enhancers.git",
+                    "tag": "0.8.2",
+                    "x-checker-data": {
+                        "type": "git",
+                        "tag-pattern": "^([\\d.]+)$"
+                    }
+                },
+                {
+                    "type": "file",
+                    "path": "com.github.rafostar.Clapper.Enhancers.metainfo.xml"
+                }
+            ],
+            "post-install": [
+                "install -Dm644 -t ${ENHANCERS_DIR}/share/metainfo ../${FLATPAK_ID}.Enhancers.metainfo.xml",
+                "appstreamcli compose --components=${FLATPAK_ID}.Enhancers --prefix=/ --origin=${FLATPAK_ID}.Enhancers --result-root=${ENHANCERS_DIR} --data-dir=${ENHANCERS_DIR}/share/app-info/xmls ${ENHANCERS_DIR}"
+            ]
+        }
     ],
     "cleanup-commands": [
         "mkdir -p /app/lib/ffmpeg",
