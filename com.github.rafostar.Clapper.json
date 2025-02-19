@@ -14,7 +14,7 @@
         "com.github.rafostar.Clapper.Enhancers": {
             "directory": "extensions/clapper/enhancers",
             "add-ld-path": "lib",
-            "bundle" : true,
+            "bundle": true,
             "no-autodownload": false,
             "autodelete": false
         }
@@ -71,7 +71,8 @@
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
-                    }
+                    },
+                    "commit": "a449b6b3f5e9c1c6852b26d8387d448ca7d0e756"
                 }
             ]
         },
@@ -96,7 +97,8 @@
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
-                    }
+                    },
+                    "commit": "a695ffc5ef2ab3f09894a6a41f0fdb2aad5897d6"
                 },
                 {
                     "type": "file",
