@@ -3,7 +3,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 8 1 * *' # Run once a month
-  workflow_dispatch: {}
 jobs:
   flatpak-external-data-checker:
     runs-on: ubuntu-latest
