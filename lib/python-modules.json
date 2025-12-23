@@ -12,6 +12,16 @@
     "sources": [
         {
             "type": "file",
+            "url": "https://files.pythonhosted.org/packages/9d/0d/1f0d7a735ca60b87953271b15d00eff5eef05f6118390ddf6f81982526ed/yt_dlp_ejs-0.3.2-py3-none-any.whl",
+            "sha256": "f2dc6b3d1b909af1f13e021621b0af048056fca5fb07c4db6aa9bbb37a4f66a9",
+            "x-checker-data": {
+                "type": "pypi",
+                "name": "yt-dlp-ejs",
+                "packagetype": "bdist_wheel"
+            }
+        },
+        {
+            "type": "file",
             "url": "https://files.pythonhosted.org/packages/6e/2f/98c3596ad923f8efd32c90dca62e241e8ad9efcebf20831173c357042ba0/yt_dlp-2025.12.8-py3-none-any.whl",
             "sha256": "36e2584342e409cfbfa0b5e61448a1c5189e345cf4564294456ee509e7d3e065",
             "x-checker-data": {
