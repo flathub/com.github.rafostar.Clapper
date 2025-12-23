@@ -58,9 +58,9 @@
             "config-opts": [
                 "--buildtype=release",
                 "-Dclapper-app=enabled",
-                "-Ddiscoverer=enabled",
-                "-Dmpris=enabled",
-                "-Dserver=enabled",
+                "-Ddiscoverer=disabled",
+                "-Dmpris=disabled",
+                "-Dserver=disabled",
                 "-Dintrospection=enabled",
                 "-Dvapi=disabled"
             ],
