@@ -67,8 +67,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper.git",
-                    "tag": "0.8.0",
-                    "commit": "a449b6b3f5e9c1c6852b26d8387d448ca7d0e756",
+                    "tag": "0.10.0",
+                    "commit": "8fcaaffe8a8f408f26a2da9f0a0087e32195fa46",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
@@ -93,8 +93,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/Rafostar/clapper-enhancers.git",
-                    "tag": "0.8.3",
-                    "commit": "29eb9bf06fd221e34b38a1c17a7a294706f8d0a5",
+                    "tag": "0.10.0",
+                    "commit": "8e91efcba6c70f2ea518946af6d08d3116b86633",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
