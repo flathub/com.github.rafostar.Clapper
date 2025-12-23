@@ -49,6 +49,7 @@
         "lib/uchardet.json",
         "lib/libmicrodns.json",
         "lib/libpeas.json",
+        "lib/deno.json",
         "lib/python-modules.json",
         "gstreamer-1.0/gstreamer.json",
         {
