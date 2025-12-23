@@ -102,6 +102,10 @@
                     }
                 },
                 {
+                    "type": "patch",
+                    "path": "clapper-enhancers-deno-path.patch"
+                },
+                {
                     "type": "file",
                     "path": "com.github.rafostar.Clapper.Enhancers.metainfo.xml"
                 }
