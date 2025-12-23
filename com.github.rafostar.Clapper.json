@@ -105,6 +105,10 @@
                 },
                 {
                     "type": "patch",
+                    "path": "clapper-enhancers-version-fix.patch"
+                },
+                {
+                    "type": "patch",
                     "path": "clapper-enhancers-deno-path.patch"
                 },
                 {
