@@ -112,6 +112,10 @@
                     "path": "clapper-enhancers-deno-path.patch"
                 },
                 {
+                    "type": "patch",
+                    "path": "clapper-enhancers-backport-ytdlp-soup.patch"
+                },
+                {
                     "type": "file",
                     "path": "com.github.rafostar.Clapper.Enhancers.metainfo.xml"
                 }
