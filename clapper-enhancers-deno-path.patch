@@ -1,12 +1,12 @@
 diff --git a/src/yt-dlp/clapper_yt_dlp.py b/src/yt-dlp/clapper_yt_dlp.py
-index 55a0d14..10a2695 100644
+index 55a0d14..a3e4e16 100644
 --- a/src/yt-dlp/clapper_yt_dlp.py
 +++ b/src/yt-dlp/clapper_yt_dlp.py
 @@ -54,6 +54,7 @@ YTDL_OPTS = {
      'quiet': debug.level < Gst.DebugLevel.INFO,
      'color': 'never', # no color in exceptions
      'ignoreconfig': True,
-+    'js_runtimes': {'deno': {'path': os.environ['CLAPPER_ENHANCERS_PATH'].rsplit('/',1)[0] + '/bin/deno'}},
++    'js_runtimes': {'deno': {'path': '/app/extensions/clapper/enhancers/bin/deno'}},
      'format': FORMAT_PREFERENCE,
      'extract_flat': 'in_playlist',
      'noplaylist': True,
