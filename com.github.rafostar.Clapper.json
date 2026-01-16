@@ -112,13 +112,18 @@
                     "path": "clapper-enhancers-deno-path.patch"
                 },
                 {
+                    "type": "patch",
+                    "path": "clapper-enhancers-backport-ytdlp-soup.patch"
+                },
+                {
                     "type": "file",
                     "path": "com.github.rafostar.Clapper.Enhancers.metainfo.xml"
                 }
             ],
             "post-install": [
                 "install -Dm644 -t ${ENHANCERS_DIR}/share/metainfo ../${FLATPAK_ID}.Enhancers.metainfo.xml",
-                "appstreamcli compose --components=${FLATPAK_ID}.Enhancers --prefix=/ --origin=${FLATPAK_ID}.Enhancers --result-root=${ENHANCERS_DIR} --data-dir=${ENHANCERS_DIR}/share/app-info/xmls ${ENHANCERS_DIR}"
+                "appstreamcli compose --components=${FLATPAK_ID}.Enhancers --prefix=/ --origin=${FLATPAK_ID}.Enhancers --result-root=${ENHANCERS_DIR} --data-dir=${ENHANCERS_DIR}/share/app-info/xmls ${ENHANCERS_DIR}",
+                "python3 -m compileall --invalidation-mode=unchecked-hash ${ENHANCERS_DIR}/plugins"
             ]
         }
     ],
