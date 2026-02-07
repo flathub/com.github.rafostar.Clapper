@@ -38,7 +38,6 @@
         "--env=PYTHONPATH=/app/extensions/clapper/enhancers/python/site-packages"
     ],
     "modules": [
-        "shared-modules/gudev/gudev.json",
         "lib/liba52.json",
         "lib/libmpeg2.json",
         "lib/libdv.json",
