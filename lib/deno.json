@@ -7,8 +7,8 @@
     "sources": [
         {
             "type": "archive",
-            "url": "https://github.com/denoland/deno/releases/download/v2.6.7/deno-x86_64-unknown-linux-gnu.zip",
-            "sha256": "c5626c9ee10e87201706fc5e64ed5a44b31527d98c130f164e149e1477c0a87d",
+            "url": "https://github.com/denoland/deno/releases/download/v2.9.4/deno-x86_64-unknown-linux-gnu.zip",
+            "sha256": "c24f955d9fbfe0ea5ae2b501c8e71ae76e31e4c9782390a54a284b3364fda725",
             "x-checker-data": {
                 "type": "json",
                 "url": "https://api.github.com/repos/denoland/deno/releases/latest",
@@ -21,8 +21,8 @@
         },
         {
             "type": "archive",
-            "url": "https://github.com/denoland/deno/releases/download/v2.6.7/deno-aarch64-unknown-linux-gnu.zip",
-            "sha256": "d2aedfa8c73e258cce78dc80e8d0e764a69d4a09d946d32f0c29eef46592b82f",
+            "url": "https://github.com/denoland/deno/releases/download/v2.9.4/deno-aarch64-unknown-linux-gnu.zip",
+            "sha256": "111da5c05c240cfdc4340f234a0e3539d39dbcb6755221f19dcd60bacc8be5aa",
             "x-checker-data": {
                 "type": "json",
                 "url": "https://api.github.com/repos/denoland/deno/releases/latest",
