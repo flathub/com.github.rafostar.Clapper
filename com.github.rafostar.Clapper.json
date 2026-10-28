@@ -24,7 +24,6 @@
         "--share=ipc",
         "--socket=fallback-x11",
         "--socket=wayland",
-        "--device=dri",
         "--socket=pulseaudio",
         "--share=network",
         "--device=all",
