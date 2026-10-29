@@ -4,6 +4,7 @@
     "builddir": true,
     "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
         "-DCMAKE_INSTALL_LIBDIR=lib",
         "-DBUILD_STATIC=OFF",
         "-DBUILD_BINARY=OFF"

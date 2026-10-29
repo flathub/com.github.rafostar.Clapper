@@ -28,7 +28,7 @@ index eaae3cf856..520de88003 100644
  #include "gstsubparse.h"
  
  #include "gstssaparse.h"
-@@ -151,8 +155,9 @@ gst_sub_parse_class_init (GstSubParseClass * klass)
+@@ -149,8 +153,9 @@ gst_sub_parse_class_init (GstSubParseClass * klass)
            "Encoding to assume if input subtitles are not in UTF-8 or any other "
            "Unicode encoding. If not set, the GST_SUBTITLE_ENCODING environment "
            "variable will be checked for an encoding to use. If that is not set "
@@ -131,13 +131,13 @@ index eaae3cf856..520de88003 100644
  }
  
 diff --git a/subprojects/gst-plugins-base/gst/subparse/meson.build b/subprojects/gst-plugins-base/gst/subparse/meson.build
-index 7be6c2becc..68d02fcbb1 100644
 --- a/subprojects/gst-plugins-base/gst/subparse/meson.build
 +++ b/subprojects/gst-plugins-base/gst/subparse/meson.build
-@@ -8,12 +8,20 @@ subparse_sources = [
-   'mpl2parse.c',
-   'qttextparse.c',
- ]
+@@ -31,12 +31,21 @@
+ if get_option('subparse').disabled()
+   subdir_done()
+ endif
+ 
 +subparse_defines = []
 +subparse_optional_deps = []
 +
@@ -146,7 +146,7 @@ index 7be6c2becc..68d02fcbb1 100644
 +  subparse_defines += '-DHAVE_UCHARDET'
 +  subparse_optional_deps += subparse_uchardet_dep
 +endif
- 
++
  gstsubparse = library('gstsubparse',
    subparse_sources,
 -  c_args : gst_plugins_base_args,
@@ -158,19 +158,15 @@ index 7be6c2becc..68d02fcbb1 100644
    install_dir : plugins_install_dir,
  )
 diff --git a/subprojects/gst-plugins-base/meson_options.txt b/subprojects/gst-plugins-base/meson_options.txt
-index 7010b91626..1b2771425b 100644
 --- a/subprojects/gst-plugins-base/meson_options.txt
 +++ b/subprojects/gst-plugins-base/meson_options.txt
-@@ -66,6 +66,9 @@ option('x11', type : 'feature', value : 'auto', description : 'X11 ximagesink pl
+@@ -107,6 +107,9 @@
  option('xshm', type : 'feature', value : 'auto', description : 'X11 shared memory support for X11 plugins')
  option('xvideo', type : 'feature', value : 'auto', description : 'X11 XVideo xvimagesink plugin')
+ option('xi', type : 'feature', value : 'auto', description : 'X11 input extension for touch support in ximagesink')
  
 +# Subparse plugin options
 +option('subparse-uchardet', type : 'feature', value : 'auto', description: 'Autodetect subtitles text encoding using uchardet')
 +
  # Common feature options
  option('examples', type : 'feature', value : 'auto', yield : true)
- option('tests', type : 'feature', value : 'auto', yield : true)
--- 
-GitLab
-
