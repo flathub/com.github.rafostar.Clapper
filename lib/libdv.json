@@ -10,7 +10,7 @@
         {
             "type": "shell",
             "commands": [
-                "cp -fp /usr/share/gnu-config/config.{sub,guess} ."
+                "cp -fp /usr/share/autoconf/build-aux/config.{sub,guess} ."
             ]
         },
         {
