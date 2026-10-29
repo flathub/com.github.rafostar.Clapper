@@ -10,9 +10,9 @@
     ],
     "sources": [
         {
-            "type": "archive",
-            "url": "https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.7.tar.xz",
-            "sha256": "3fc79408ae1d84b406922fa9319ce005631c95ca0f34b205fad867e8b30e45b1"
+            "type": "git",
+            "url": "https://gitlab.freedesktop.org/uchardet/uchardet.git",
+            "commit": "9699dfce074fac80d8d622f02ea6d8bb2f55cf00"
         }
     ]
 }
